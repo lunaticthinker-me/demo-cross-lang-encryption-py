@@ -1,0 +1,24 @@
+-r requirements.txt
+
+# for python 2, use: pdoc
+pdoc3
+
+pytest
+pytest-cov
+coverage
+
+twine
+
+# setuptools>=38.6.0
+# wheel>=0.31.0
+
+# isort
+# pylint
+
+# pycodestyle
+# pydocstyle
+# pytest-xdist
+# radon
+# yamllint
+# bandit
+# autopep8
