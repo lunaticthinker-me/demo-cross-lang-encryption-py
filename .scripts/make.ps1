@@ -22,7 +22,7 @@ $DefaultProject = 'py_greet'
 
 function PyInit() {
   if ($Project -ne $DefaultProject) {
-    Rename-Item -Path .\hello -NewName $Project
+    Rename-Item -Path .\py_greet -NewName $Project
     Get-ChildItem -Path . -Recurse -File |
       Select-String -Pattern "py_greet" |
       Select-Object -Unique Path | ForEach-Object {
