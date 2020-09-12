@@ -1,6 +1,6 @@
 """CLI main runner"""
 
-from py_greet import hello
+from democrypt import hello
 
 
 def main():

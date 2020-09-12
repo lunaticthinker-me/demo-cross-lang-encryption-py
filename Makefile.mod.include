@@ -2,7 +2,7 @@ include Makefile.include
 
 ## Add your make instructions here
 
-PROJECT=py_greet
+PROJECT=democrypt
 PY = python
 PIP = pip
 
@@ -40,7 +40,7 @@ clean-powershell:
 	$(POWERSHELL) -File ./.scripts/make.ps1 -Action rmdir -Path ./env
 
 docs: ## Generate documentation for the Project
-	$(LOCAL_ENV)/pdoc --html -o docs py_greet
+	$(LOCAL_ENV)/pdoc --html -o docs democrypt
 
 
 RELEASE_OPTIONS = -Patch -Dry

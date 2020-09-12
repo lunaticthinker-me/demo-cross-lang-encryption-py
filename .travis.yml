@@ -52,16 +52,16 @@ before_script:
   # - make --version
   # - python --version
   - echo $MODE
-  - if [[ "$MODE" = "" ]]; then make init PROJECT=py_greet;
-    else make init MODE=$MODE PROJECT=py_greet;
+  - if [[ "$MODE" = "" ]]; then make init PROJECT=democrypt;
+    else make init MODE=$MODE PROJECT=democrypt;
     fi
   - make configure
 scripts:
   - make test
   - if [[ "$MODE" == "app" ]];
     then if [[ $TRAVIS_OS_NAME == 'windows' ]];
-    then ./env/Scripts/py_greet.exe;
-    else ./env/bin/py_greet;
+    then ./env/Scripts/democrypt.exe;
+    else ./env/bin/democrypt;
     fi;
     fi
   - if [[ $TRAVIS_OS_NAME == 'windows' ]];

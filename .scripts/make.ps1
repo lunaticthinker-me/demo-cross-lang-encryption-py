@@ -18,13 +18,13 @@
   [System.String]$Src = '.\main.o'
 )
 
-$DefaultProject = 'py_greet'
+$DefaultProject = 'democrypt'
 
 function PyInit() {
   if ($Project -ne $DefaultProject) {
-    Rename-Item -Path .\py_greet -NewName $Project
+    Rename-Item -Path .\democrypt -NewName $Project
     Get-ChildItem -Path . -Recurse -File |
-      Select-String -Pattern "py_greet" |
+      Select-String -Pattern "democrypt" |
       Select-Object -Unique Path | ForEach-Object {
         (Get-Content $_.Path) |
           Foreach-Object {$_ -replace $DefaultProject, $Project}  |
