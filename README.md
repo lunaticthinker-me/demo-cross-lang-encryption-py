@@ -44,12 +44,13 @@ Encrypt/Decrypt Example for the Set of Articles [Cross Programming Language Encr
 
 ## Compatibility
 
-| Language/Algorithm | C# | Go | Js | Py |
+| Algorithm / Language (Py) | C# | Go | Js | Py |
+|---|---|---|---|---|
 | AES/CFB | ? | ✓ | ✓ | ✕ |
 | AES/CFB | ✓ | ✕ | ✓ | ✓ |
 | AES/CBC | ✓ | ✓ | ✓ | ✓ |
-| RSA/OAEP |  |  |  |  |
-| RSA/PCKS1V15 |  |  |  |  |
+| RSA/OAEP | ✓ | ✕ | ✓ | ✓ |
+| RSA/PCKS1V15 | ✓ | ✓ | ✓ | ✓ |
 
 #### Known Issues / Troubleshooting
 
