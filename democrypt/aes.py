@@ -13,20 +13,25 @@ class AesCrypt:
     self.mode = mode
 
   def encrypt(self, plaintext: str) -> str:
+    return self.encrypt_bytes(bytes(plaintext, 'utf-8')).decode('utf-8')
+
+  def encrypt_bytes(self, plaintext: bytes) -> bytes:
     iv = get_random_bytes(AES.block_size)
     aes = AES.new(self.hash, self.mode, iv)
     paddedtext = self.pkcs7_padding(plaintext) if self.mode == AES.MODE_CBC else plaintext
-    encrypted = aes.encrypt(bytes(paddedtext, 'utf-8'))
-    return base64.b64encode(iv + encrypted).decode('utf-8')
+    return base64.b64encode(iv + aes.encrypt(paddedtext))
 
   def decrypt(self, ciphertext: str) -> str:
-    cipher = base64.b64decode(bytes(ciphertext, 'utf-8'))
-    iv = cipher[0:16]
+    return self.decrypt_bytes(bytes(ciphertext, encoding='utf-8')).decode('utf-8')
+
+  def decrypt_bytes(self, ciphertext: bytes) -> bytes:
+    ciphertext = base64.b64decode(ciphertext)
+    iv = ciphertext[0:16]
     aes = AES.new(self.hash, self.mode, iv)
-    paddedtext = aes.decrypt(cipher[16:]).decode('utf-8')
+    paddedtext = aes.decrypt(ciphertext[16:])
     return self.pkcs7_trimming(paddedtext) if self.mode == AES.MODE_CBC else paddedtext
 
-  def pkcs7_padding(self, s: str) -> str:
+  def pkcs7_padding(self, s: bytes) -> bytes:
     """
     Padding to blocksize according to PKCS #7
     calculates the number of missing chars to BLOCK_SIZE and pads with
@@ -35,15 +40,19 @@ class AesCrypt:
     """
     s_len = len(s)
     BS = AES.block_size
-    s = s + (BS - s_len % BS) * chr(BS - s_len % BS)
-    return s
+    # s = s + (BS - s_len % BS) * chr(BS - s_len % BS)
 
-  def pkcs7_trimming(self, s: str) -> str:
+    ss = bytearray(s)
+    size = BS - s_len % BS
+    for i in range(size):
+      ss.append(size)
+    return bytes(ss)
+
+  def pkcs7_trimming(self, s: bytes) -> bytes:
     """
     Trimming according to PKCS #7
     @param s: string Text to unpad
     @type s: string
     @rtype: string
     """
-    cut = bytes(s, 'utf-8')[-1]
-    return s[0:-cut]
+    return s[0:-s[-1]]

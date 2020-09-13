@@ -1,39 +1,21 @@
 import base64
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.asymmetric import padding
+from M2Crypto import SMIME, X509, RSA
 
 class X509Crypt:
 
   def __init__(self, private: str, public: str):
-    self.public = serialization.load_pem_public_key(
-        public,
-        backend=default_backend()
-    )
-    self.private = serialization.load_pem_private_key(
-        private,
-        password=None,
-        backend=default_backend()
-    )
+    self.mime = SMIME.SMIME()
+    self.private_key = RSA.load_key_string(bytes(private, 'utf-8'))
+    self.public_key = X509.load_cert_string(bytes(public, 'utf-8'))
 
   def decrypt(self, ciphertext: str) -> str:
-    decoded = base64.b64decode(bytes(ciphertext, 'utf-8'))
-    return self.private.decrypt(
-      decoded,
-      padding.OAEP(
-          mgf=padding.MGF1(algorithm=hashes.SHA256()),
-          algorithm=hashes.SHA256(),
-          label=None
-      )
-   )
+    return self.decrypt_bytes(bytes(ciphertext, 'utf-8')).decode('utf-8')
+
+  def decrypt_bytes(self, ciphertext: bytes) -> bytes:
+    return self.private_key.private_decrypt(base64.b64decode(ciphertext), RSA.pkcs1_padding)
 
   def encrypt(self, plaintext: str) -> str:
-    cipher = self.public.encrypt(
-      plaintext,
-      padding.OAEP(
-          mgf=padding.MGF1(algorithm=hashes.SHA256()),
-          algorithm=hashes.SHA256(),
-          label=None
-      )
-    )
-    return base64.b16encode(cipher).decode('utf-8')
+    return self.encrypt_bytes(bytes(plaintext, 'utf-8')).decode('utf-8')
+
+  def encrypt_bytes(self, plaintext: bytes) -> bytes:
+    return base64.b64encode(self.public_key.get_pubkey().get_rsa().public_encrypt(plaintext, RSA.pkcs1_padding))
