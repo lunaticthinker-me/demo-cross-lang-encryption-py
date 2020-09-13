@@ -7,7 +7,7 @@
 import unittest
 from pathlib import Path
 from democrypt.x509 import X509Crypt
-from democrypt.util import data, JS_RSA, GO_RSA
+from democrypt.util import data
 
 class X509TestCase(unittest.TestCase):
   """`hello` Test Case"""
