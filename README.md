@@ -46,7 +46,7 @@ Encrypt/Decrypt Example for the Set of Articles [Cross Programming Language Encr
 
 | Algorithm / Language (Py) | C# | Go | Js | Py |
 |---|---|---|---|---|
-| AES/CFB | ? | ✓ | ✓ | ✕ |
+| AES/CFB | ✕ | ✕ | ✕ | ✕ |
 | AES/CFB | ✓ | ✕ | ✓ | ✓ |
 | AES/CBC | ✓ | ✓ | ✓ | ✓ |
 | RSA/OAEP | ✓ | ✕ | ✓ | ✓ |
