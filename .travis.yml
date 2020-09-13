@@ -7,16 +7,9 @@ python:
   - "3.7"
   - "3.8"
   - "3.9-dev"  # 3.9 development branch
-env:
-  - MODE=app
-  - MODE=mod
 before_script:
   # - make --version
   # - python --version
-  - echo $MODE
-  - if [[ "$MODE" = "" ]]; then make init PROJECT=democrypt;
-    else make init MODE=$MODE PROJECT=democrypt;
-    fi
   - make configure
 scripts:
   - make test
