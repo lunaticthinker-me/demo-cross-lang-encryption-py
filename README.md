@@ -89,6 +89,7 @@ git clone https://github.com/lunaticthinker-me/demo-cross-lang-encryption-py
 ##### For Linux/Unix/OSX
 
 - Please install `git` and `make`
+- Please install `openssl`, `libssl-dev` and `swig`
 
 ```bash
 sudo apt-get install git make -y
