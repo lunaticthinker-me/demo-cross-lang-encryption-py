@@ -31,5 +31,9 @@ with open(Path(__file__).parent / 'cert/rsa/cert.pem') as pub:
 print('// X509 Encrypted Values:')
 with open(Path(__file__).parent / 'cert/x509/cert.pem') as pub:
   with open(Path(__file__).parent / 'cert/x509/key.pem') as priv:
-    x509 = X509Crypt(priv.read(), pub.read())
-    print("PY_X509 = '{}'".format(x509.encrypt(data[0])))
+    x509 = X509Crypt(priv.read(), pub.read(), padding=PKCS1_v1_5)
+    print("PY_X509_PKCS1V1_5 = '{}'".format(x509.encrypt(data[0])))
+with open(Path(__file__).parent / 'cert/x509/cert.pem') as pub:
+  with open(Path(__file__).parent / 'cert/x509/key.pem') as priv:
+    x509 = X509Crypt(priv.read(), pub.read(), padding=PKCS1_OAEP)
+    print("PY_X509_OAEP = '{}'".format(x509.encrypt(data[0])))
